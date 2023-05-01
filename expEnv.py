@@ -2,6 +2,7 @@ import requests
 import os
 import sys
 import argparse
+import base64
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--pr-title', help='Taskid of the task submitted')
@@ -15,6 +16,7 @@ data = res.json()
 
 test_dest_path = data['test_dest_path']
 test_dest_file_name = data['test_dest_file_name']
+workflow_file = data['workflow_file']
 tests = data['test_cases']
 
 os.chdir(test_dest_path)
@@ -28,14 +30,25 @@ else:
     try:
         test_file = open(os.path.join(test_dest_path, test_dest_file_name) , 'x')
     except:
-        print("File with given already exists")
+        print("File with given name already exists")
         sys.exit(1)
 
     test_file.write(tests)
     test_file.close()
 
+workflow_initial_b64 = workflow_file.encode('ascii')
+workflow_initial_b64 = base64.b64encode(workflow_initial_b64)
+
+workflow_current = open(os.path.join('.github','workflows','Dlancer-Integration.yml'), 'r').read()
+workflow_current_b64 = workflow_current.encode('ascii')
+workflow_current_b64 = base64.b64encode(workflow_current_b64)
+
+if(workflow_initial_b64 != workflow_current_b64):
+    print("Workflow file has been changed. Please update the workflow file to the initial state")
+    sys.exit(1)
+
 os.environ['TEST_SUITE'] = data['test_cases']
-os.environ['TEST_RUNNER'] = data['test_runner']
+os.environ['TEST_RUNNER'] = data['test_runner'] # Add the template change detection logic here
 os.environ['TEST_DEST_PATH'] = test_dest_path
 os.environ['TASK_ID'] = task_id
 
