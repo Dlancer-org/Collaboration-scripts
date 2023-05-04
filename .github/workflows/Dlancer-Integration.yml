@@ -1,11 +1,13 @@
 name: Dlancer-Integration-Workflow
 
 on:
-  pull_request:
-    branches: master
+  push:
+    branches : 
+      - master
 
 jobs:
-  Fetch, Test & Merge:
+  submit:
+    name: Fetch, Test & Merge
     runs-on: ubuntu-latest
     steps:
     - name: Checkout code
