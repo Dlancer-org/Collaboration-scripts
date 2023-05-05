@@ -4,11 +4,11 @@ import sys
 import argparse
 import base64
 
-parser = argparse.ArgumentParser()
-parser.add_argument('--prTitle', help='Taskid of the task submitted')
-args = parser.parse_args()
+# parser = argparse.ArgumentParser()
+# parser.add_argument('--prTitle', help='Taskid of the task submitted')
+# args = parser.parse_args()
 
-pr_title = args.prTitle
+pr_title = os.environ["prTitle"]
 split_title = pr_title.split(';')
 task_id = split_title[-1]
 
@@ -19,8 +19,6 @@ test_dest_path = data['test_dest_path']
 dep_installer = data['dep_installer']
 test_dest_file_name = data['test_dest_file_name']
 tests = data['open_tests'] + "\n" + data['hidden_tests']
-
-print(test_dest_path, dep_installer, test_dest_file_name, tests)
 
 os.chdir(test_dest_path)
 
