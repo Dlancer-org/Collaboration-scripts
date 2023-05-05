@@ -54,7 +54,7 @@ else:
 
 os.environ['PR_TITLE'] = "".join(split_title[:-1])
 os.environ['DEP_INSTALL_CMD'] = dep_installer
-os.environ['TEST_SUITE'] = str(tests)
+os.environ['TEST_SUITE'] = tests
 os.environ['TEST_RUNNER'] = data['test_runner'] # Add the template change detection logic here
 os.environ['TEST_DEST_PATH'] = test_dest_path
 os.environ['TEST_DEST_FILE_NAME'] = test_dest_file_name
