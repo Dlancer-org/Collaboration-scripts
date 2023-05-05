@@ -20,6 +20,8 @@ dep_installer = data['dep_installer']
 test_dest_file_name = data['test_dest_file_name']
 tests = data['open_tests'] + "\n" + data['hidden_tests']
 
+print(test_dest_path, dep_installer, test_dest_file_name, tests)
+
 os.chdir(test_dest_path)
 
 if(os.path.isfile(test_dest_path)):
