@@ -11,13 +11,13 @@ args = parser.parse_args()
 pr_title = args.taskid
 task_id = pr_title.split(';')[-1]
 
-res = requests.get('http://localhost:5000/taskTrackingInfo/' + task_id)
+res = requests.get('http://localhost:5000/integration/taskTrack/' + task_id)
 data = res.json()
 
 test_dest_path = data['test_dest_path']
 test_dest_file_name = data['test_dest_file_name']
 workflow_file = data['workflow_file']
-tests = data['test_cases']
+tests = data['open_tests'] + "\n" + data['hidden_tests']
 
 os.chdir(test_dest_path)
 
