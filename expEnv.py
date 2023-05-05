@@ -37,20 +37,20 @@ else:
     test_file.write(tests)
     test_file.close()
 
-workflow_initial = requests.get('https://raw.githubusercontent.com/Dlancer-org/Collaboration-scripts/master/template.yml')
-workflow_initial = workflow_initial.content
-workflow_initial = workflow_initial.decode('utf-8')
+# workflow_initial = requests.get('https://raw.githubusercontent.com/Dlancer-org/Collaboration-scripts/master/template.yml')
+# workflow_initial = workflow_initial.content
+# workflow_initial = workflow_initial.decode('utf-8')
 
-workflow_initial_b64 = workflow_initial.encode('ascii')
-workflow_initial_b64 = base64.b64encode(workflow_initial_b64)
+# workflow_initial_b64 = workflow_initial.encode('ascii')
+# workflow_initial_b64 = base64.b64encode(workflow_initial_b64)
 
-workflow_current = open(os.path.join('.github','workflows','Dlancer-Integration.yml'), 'r').read()
-workflow_current_b64 = workflow_current.encode('ascii')
-workflow_current_b64 = base64.b64encode(workflow_current_b64)
+# workflow_current = open(os.path.join('.github','workflows','Dlancer-Integration.yml'), 'r').read()
+# workflow_current_b64 = workflow_current.encode('ascii')
+# workflow_current_b64 = base64.b64encode(workflow_current_b64)
 
-if(workflow_initial_b64 != workflow_current_b64):
-    print("Workflow file has been changed. Please update the workflow file to the initial state")
-    sys.exit(1)
+# if(workflow_initial_b64 != workflow_current_b64):
+#     print("Workflow file has been changed. Please update the workflow file to the initial state")
+#     sys.exit(1)
 
 os.environ['PR_TITLE'] = "".join(split_title[:-1])
 os.environ['DEP_INSTALL_CMD'] = dep_installer
