@@ -18,14 +18,14 @@ data = res.json()
 test_dest_path = data['test_dest_path']
 dep_installer = data['dep_installer']
 test_dest_file_name = data['test_dest_file_name']
-tests = ''''''+data['open_tests'] + "\n" + data['hidden_tests']
+tests =  + "\n" + data['hidden_tests']
 
 os.chdir(test_dest_path)
 
 if(os.path.isfile(test_dest_path)):
     test_file = open(test_dest_path, 'a')
-    test_file.write("\n")
-    test_file.write(tests)
+    test_file.write(data['open_tests'] + "\n")
+    test_file.write(data['hidden_tests'])
     test_file.close()
 else:
     try:
@@ -54,7 +54,7 @@ else:
 
 os.environ['PR_TITLE'] = "".join(split_title[:-1])
 os.environ['DEP_INSTALL_CMD'] = dep_installer
-os.environ['TEST_SUITE'] = tests
+# os.environ['TEST_SUITE'] = tests
 os.environ['TEST_RUNNER'] = data['test_runner'] # Add the template change detection logic here
 os.environ['TEST_DEST_PATH'] = test_dest_path
 os.environ['TEST_DEST_FILE_NAME'] = test_dest_file_name
