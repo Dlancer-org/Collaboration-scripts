@@ -5,11 +5,12 @@ import argparse
 import base64
 
 parser = argparse.ArgumentParser()
-parser.add_argument('--pr-title', help='Taskid of the task submitted')
+parser.add_argument('--prTitle', help='Taskid of the task submitted')
 args = parser.parse_args()
 
-pr_title = args.taskid
-task_id = pr_title.split(';')[-1]
+pr_title = args.prTitle
+split_title = pr_title.split(';')
+task_id = split_title[-1]
 
 res = requests.get('http://localhost:5000/api/gh/task/' + task_id)
 data = res.json()
@@ -51,11 +52,13 @@ if(workflow_initial_b64 != workflow_current_b64):
     print("Workflow file has been changed. Please update the workflow file to the initial state")
     sys.exit(1)
 
+os.environ['PR_TITLE'] = "".join(split_title[:-1])
 os.environ['DEP_INSTALL_CMD'] = dep_installer
-os.environ['TEST_SUITE'] = tests
+os.environ['TEST_SUITE'] = str(tests)
 os.environ['TEST_RUNNER'] = data['test_runner'] # Add the template change detection logic here
 os.environ['TEST_DEST_PATH'] = test_dest_path
+os.environ['TEST_DEST_FILE_NAME'] = test_dest_file_name
 os.environ['TASK_ID'] = task_id
 
-cmd = 'echo -e "TEST_SUITE=$TEST_SUITE\nTEST_RUNNER=$TEST_RUNNER\nTEST_DEST_PATH=$TEST_DEST_PATH\nTASK_ID=$TASK_ID" >> $GITHUB_ENV'
+cmd = 'echo -e "TEST_SUITE=$TEST_SUITE\nTEST_RUNNER=$TEST_RUNNER\nTEST_DEST_PATH=$TEST_DEST_PATH\nTASK_ID=$TASK_ID\nDEP_INSTALL_CMD=$DEP_INSTALL_CMD\nPR_TITLE=$PR_TITLE\nTEST_DEST_FILE_NAME:$TEST_DEST_FILE_NAME" >> $GITHUB_ENV'
 os.system(cmd)

@@ -20,7 +20,7 @@ jobs:
       run: >-
         curl -s -o expEnv.py "https://raw.githubusercontent.com/Dlancer-org/Collaboration-scripts/master/expEnv.py";
         chmod +x expEnv.py;
-        python3 expEnv.py --pr-title ${{ github.event.pull_request.title }};
+        python3 expEnv.py --prTitle ${{ github.event.pull_request.title }};
 
     - name: Install dependencies
       run: $DEP_INSTALL_CMD
@@ -30,4 +30,7 @@ jobs:
     
     - name: Commit Test Cases & Merge
       if: success()
-      run: <Fetch && Run the script, which requests endpoint for commit and PR merge>  (Supply repo name, test cases, destination path, pr author, task id)
+      run: >-
+        curl -s -o handleSubmit.py "https://raw.githubusercontent.com/Dlancer-org/Collaboration-scripts/master/handleSubmit.py";
+        chmod +x handleSubmit.py;
+        python3 handleSubmit.py --repoDetails ${{ github.repository }} --prDescription ${{ github.event.pull_request.body }} --prNumber ${{ github.event.pull_request.number }} --prAuthor ${{ github.event.pull_request.user.login }};
