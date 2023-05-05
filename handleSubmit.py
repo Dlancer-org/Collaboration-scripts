@@ -15,7 +15,7 @@ args = parser.parse_args()
 repoName = args.repoDetails.split('/')[1]
 repoOwner = args.repoDetails.split('/')[0]
 
-response = requests.post('http://localhost:5000/api/gh/submit', json={
+response = requests.post('http://localhost:5000/api/gh/task', json={
     'repoName': repoName,
     'repoOwner': repoOwner,
     'taskid': os.environ['TASK_ID'],
