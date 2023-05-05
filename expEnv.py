@@ -18,7 +18,7 @@ data = res.json()
 test_dest_path = data['test_dest_path']
 dep_installer = data['dep_installer']
 test_dest_file_name = data['test_dest_file_name']
-tests =  + "\n" + data['hidden_tests']
+# tests =  + "\n" + data['hidden_tests']
 
 os.chdir(test_dest_path)
 
@@ -34,7 +34,8 @@ else:
         print("File with given name already exists")
         sys.exit(1)
 
-    test_file.write(tests)
+    test_file.write(data['open_tests'] + "\n")
+    test_file.write(data['hidden_tests'])
     test_file.close()
 
 # workflow_initial = requests.get('https://raw.githubusercontent.com/Dlancer-org/Collaboration-scripts/master/template.yml')
