@@ -1,3 +1,4 @@
+import subprocess
 import requests
 import os
 import sys
@@ -53,13 +54,15 @@ else:
 #     print("Workflow file has been changed. Please update the workflow file to the initial state")
 #     sys.exit(1)
 
-os.environ['PR_TITLE'] = "".join(split_title[:-1])
-os.environ['DEP_INSTALL_CMD'] = dep_installer
-# os.environ['TEST_SUITE'] = tests
-os.environ['TEST_RUNNER'] = data['test_runner'] # Add the template change detection logic here
-os.environ['TEST_DEST_PATH'] = test_dest_path
-os.environ['TEST_DEST_FILE_NAME'] = str(test_dest_file_name)
-os.environ['TASK_ID'] = task_id
+subprocess.run(f'export PR_TITLE="{pr_title}"', shell=True)
+subprocess.run(f'export DEP_INSTALL_CMD="{dep_installer}"', shell=True)
+# subprocess.run(f'export TEST_SUITE="{tests}"', shell=True)
+subprocess.run(f'export TEST_RUNNER="{data["test_runner"]}"', shell=True)
+subprocess.run(f'export TEST_DEST_PATH="{test_dest_path}"', shell=True)
+subprocess.run(f'export TEST_DEST_FILE_NAME="{test_dest_file_name}"', shell=True)
+subprocess.run(f'export TASK_ID="{task_id}"', shell=True)
+
+
 
 cmd = 'echo -e "TEST_SUITE=$TEST_SUITE\nTEST_RUNNER=$TEST_RUNNER\nTEST_DEST_PATH=$TEST_DEST_PATH\nTASK_ID=$TASK_ID\nDEP_INSTALL_CMD=$DEP_INSTALL_CMD\nPR_TITLE=$PR_TITLE\nTEST_DEST_FILE_NAME:$TEST_DEST_FILE_NAME" >> $GITHUB_ENV'
 os.system(cmd)
