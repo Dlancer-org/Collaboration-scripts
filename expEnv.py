@@ -12,7 +12,7 @@ pr_title = os.environ["prTitle"]
 split_title = pr_title.split(';')
 task_id = split_title[-1]
 
-res = requests.get('http://localhost:5000/api/gh/task/' + task_id)
+res = requests.get('https://bae7-106-51-25-38.ngrok-free.app/api/gh/task/' + task_id)
 data = res.json()
 
 test_dest_path = data['test_dest_path']
