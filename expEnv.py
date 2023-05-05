@@ -18,7 +18,7 @@ data = res.json()
 test_dest_path = data['test_dest_path']
 dep_installer = data['dep_installer']
 test_dest_file_name = data['test_dest_file_name']
-tests = data['open_tests'] + "\n" + data['hidden_tests']
+tests = ''''''+data['open_tests'] + "\n" + data['hidden_tests']
 
 os.chdir(test_dest_path)
 
