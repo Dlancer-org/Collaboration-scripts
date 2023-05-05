@@ -23,7 +23,7 @@ jobs:
         python3 expEnv.py --pr-title ${{ github.event.pull_request.title }};
 
     - name: Install dependencies
-      run: <embedd-dependency-installer-while-project-creation>
+      run: $DEP_INSTALL_CMD
 
     - name: Run tests
       run: $TEST_RUNNER

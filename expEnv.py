@@ -15,6 +15,7 @@ res = requests.get('http://localhost:5000/integration/taskTrack/' + task_id)
 data = res.json()
 
 test_dest_path = data['test_dest_path']
+dep_installer = data['dep_installer']
 test_dest_file_name = data['test_dest_file_name']
 workflow_file = data['workflow_file']
 tests = data['open_tests'] + "\n" + data['hidden_tests']
@@ -47,6 +48,7 @@ if(workflow_initial_b64 != workflow_current_b64):
     print("Workflow file has been changed. Please update the workflow file to the initial state")
     sys.exit(1)
 
+os.environ['DEP_INSTALL_CMD'] = dep_installer
 os.environ['TEST_SUITE'] = data['test_cases']
 os.environ['TEST_RUNNER'] = data['test_runner'] # Add the template change detection logic here
 os.environ['TEST_DEST_PATH'] = test_dest_path
