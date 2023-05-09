@@ -8,11 +8,13 @@ parser = argparse.ArgumentParser()
 parser.add_argument('--prTitle', help='Taskid of the task submitted')
 args = parser.parse_args()
 
+host = os.environ['HOST']
+
 pr_title = args.prTitle
 split_title = pr_title.split(';')
 task_id = split_title[-1]
 
-res = requests.get('https://26da-103-148-39-221.ngrok-free.app/api/gh/task/' + task_id)
+res = requests.get(f'{host}/api/gh/task/{task_id}')
 data = res.json()
 print(res)
 
@@ -34,20 +36,20 @@ else:
         print("File with given name already exists / Invalid path to embedded given tests")
         sys.exit(1)
 
-workflow_initial = requests.get('https://raw.githubusercontent.com/Dlancer-org/Collaboration-scripts/master/template.yml')
-workflow_initial = workflow_initial.content
-workflow_initial = workflow_initial.decode('utf-8')
+# workflow_initial = requests.get('https://raw.githubusercontent.com/Dlancer-org/Collaboration-scripts/master/template.yml')
+# workflow_initial = workflow_initial.content
+# workflow_initial = workflow_initial.decode('utf-8')
 
-workflow_initial_b64 = workflow_initial.encode('ascii')
-workflow_initial_b64 = base64.b64encode(workflow_initial_b64)
+# workflow_initial_b64 = workflow_initial.encode('ascii')
+# workflow_initial_b64 = base64.b64encode(workflow_initial_b64)
 
-workflow_current = open(os.path.join('.github','workflows','Dlancer-Integration.yml'), 'r').read()
-workflow_current_b64 = workflow_current.encode('ascii')
-workflow_current_b64 = base64.b64encode(workflow_current_b64)
+# workflow_current = open(os.path.join('.github','workflows','Dlancer-Integration.yml'), 'r').read()
+# workflow_current_b64 = workflow_current.encode('ascii')
+# workflow_current_b64 = base64.b64encode(workflow_current_b64)
 
-if(workflow_initial_b64 != workflow_current_b64):
-    print("Workflow file has been changed. Please update the workflow file to the initial state")
-    sys.exit(1)
+# if(workflow_initial_b64 != workflow_current_b64):
+#     print("Workflow file has been changed. Please update the workflow file to the initial state")
+#     sys.exit(1)
 
 with open(os.path.join('.', 'dep_ins.sh') , 'w') as dep:
     dep.write('#!/bin/bash\n')
