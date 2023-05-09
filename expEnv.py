@@ -63,7 +63,7 @@ os.environ["PR_TITLE"] = ''.join(split_title[:-1])
 os.environ["TASK_ID"] = task_id
 
 try:
-    cmd = 'echo "TASK_ID=$TASK_ID\nPR_TITLE=$PR_TITLE\n" >> file1.txt'
+    cmd = 'echo "TASK_ID=$TASK_ID\nPR_TITLE=$PR_TITLE\n" >> $GITHUB_ENV'
     os.system(cmd)
 except:
     print("Error while exporting environment variables")
