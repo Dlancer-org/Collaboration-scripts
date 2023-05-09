@@ -9,6 +9,8 @@ jobs:
   submit:
     name: Fetch, Test & Merge
     runs-on: ubuntu-latest
+    env:
+      host: ""
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
@@ -23,10 +25,10 @@ jobs:
         python3 expEnv.py --prTitle "${{ github.event.pull_request.title }}";
 
     - name: Install dependencies
-      run: $DEP_INSTALL_CMD
+      run: sh ./dep_ins.sh
 
     - name: Run tests
-      run: $TEST_RUNNER
+      run: sh ./test.sh
     
     - name: Commit Test Cases & Merge
       if: success()
