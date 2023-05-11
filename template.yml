@@ -18,17 +18,28 @@ jobs:
         ref: ${{ github.event.pull_request.head.ref }}
         fetch-depth: 0
 
-    - name: Fetch Driver
+    - name: Fetch Drivers
       run: >-
         curl -s -o expEnv.py "https://raw.githubusercontent.com/Dlancer-org/Collaboration-scripts/master/expEnv.py";
-        chmod +x expEnv.py;
+        curl -s -o handleFailure.py "https://raw.githubusercontent.com/Dlancer-org/Collaboration-scripts/master/handleFailure.py";
+        chmod +x expEnv.py handleFailure.py;
         python3 expEnv.py --prTitle "${{ github.event.pull_request.title }}";
 
     - name: Install dependencies
       run: sh ./dep_ins.sh
 
+    - name: Handle Installation Errors
+      if: failure()
+      run: >-
+        python3 handleFailure.py --repoDetails "${{ github.repository }}" --prNumber "${{ github.event.pull_request.number }}" --step 1;
+
     - name: Run tests
       run: sh ./test.sh
+    
+    - name: Handle Test Errors
+      if: failure()
+      run: >-
+        python3 handleFailure.py --repoDetails "${{ github.repository }}" --prNumber "${{ github.event.pull_request.number }}" --step 2;
     
     - name: Commit Test Cases & Merge
       if: success()

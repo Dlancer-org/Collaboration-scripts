@@ -38,7 +38,7 @@ response = requests.post(f'{host}/api/gh/task', json={
 
 try:
     response.raise_for_status()
-    print("Task submitted successfully")
+    print("Task completed successfully")
 except requests.exceptions.HTTPError as err:
-    print("Task submission failed", err)   
+    print("Task submission failed, check server logs", err)   
     sys.exit(1)
