@@ -10,10 +10,10 @@ jobs:
     name: Fetch, Test & Merge
     runs-on: ubuntu-latest
     env:
-      host: ""
+      HOST: ""
     steps:
     - name: Checkout code
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
       with:
         ref: ${{ github.event.pull_request.head.ref }}
         fetch-depth: 0
@@ -31,7 +31,7 @@ jobs:
     - name: Handle Installation Errors
       if: failure()
       run: >-
-        python3 handleFailure.py --repoDetails "${{ github.repository }}" --prNumber "${{ github.event.pull_request.number }}" --step 1;
+        python3 handleFailure.py --repoDetails "${{ github.repository }}" --prNum "${{ github.event.pull_request.number }}" --step 1;
 
     - name: Run tests
       run: sh ./test.sh
@@ -39,7 +39,7 @@ jobs:
     - name: Handle Test Errors
       if: failure()
       run: >-
-        python3 handleFailure.py --repoDetails "${{ github.repository }}" --prNumber "${{ github.event.pull_request.number }}" --step 2;
+        python3 handleFailure.py --repoDetails "${{ github.repository }}" --prNum "${{ github.event.pull_request.number }}" --step 2;
     
     - name: Commit Test Cases & Merge
       if: success()
