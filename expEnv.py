@@ -22,20 +22,6 @@ test_dest_path = data['test_dest_path']
 dep_installer = data['dep_installer']
 test_dest_file_name = data['test_dest_file_name']
 
-if(os.path.isfile(test_dest_path)):
-    with open(test_dest_path, 'a') as test_file:
-        test_file.write(data['open_tests'] + "\n")
-        test_file.write(data['hidden_tests'])
-    
-else:
-    try:
-        with open(os.path.join(test_dest_path, test_dest_file_name) , 'x') as test_file:
-            test_file.write(data['open_tests'] + "\n")
-            test_file.write(data['hidden_tests'])
-    except:
-        print("File with given name already exists / Invalid path to embedded given tests")
-        sys.exit(1)
-
 # workflow_initial = requests.get('https://raw.githubusercontent.com/Dlancer-org/Collaboration-scripts/master/template.yml')
 # workflow_initial = workflow_initial.content
 # workflow_initial = workflow_initial.decode('utf-8')
@@ -57,7 +43,12 @@ with open(os.path.join('.', 'dep_ins.sh') , 'w') as dep:
 
 with open(os.path.join('.', 'test.sh') , 'w') as test:
     test.write('#!/bin/bash\n')
-    test.write(str(data["test_runner"]))
+    
+    test.write(str(data["test_runner"]) + " " + test_dest_path + test_dest_file_name)                    
+
+with open(os.path.join(test_dest_path, test_dest_file_name) , 'w') as test_file:
+    test_file.write(data['open_tests'] + "\n")
+    test_file.write(data['hidden_tests'])
 
 os.environ["PR_TITLE"] = ''.join(split_title[:-1])
 os.environ["TASK_ID"] = task_id
