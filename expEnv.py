@@ -43,7 +43,6 @@ with open(os.path.join('.', 'dep_ins.sh') , 'w') as dep:
 
 with open(os.path.join('.', 'test.sh') , 'w') as test:
     test.write('#!/bin/bash\n')
-    
     test.write(str(data["test_runner"]) + " " + test_dest_path + test_dest_file_name)                    
 
 with open(os.path.join(test_dest_path, test_dest_file_name) , 'w') as test_file:
