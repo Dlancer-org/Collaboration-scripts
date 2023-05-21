@@ -10,7 +10,7 @@ jobs:
     name: Fetch, Test & Merge
     runs-on: ubuntu-latest
     env:
-      HOST: ""
+      HOST: "https://ea3c-106-51-170-22.ngrok-free.app"
     steps:
     - name: Checkout code
       uses: actions/checkout@v3
