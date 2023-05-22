@@ -13,7 +13,7 @@ host = os.environ['HOST']
 pr_title = args.prTitle
 split_title = pr_title.split(';')
 task_id = split_title[-1]
-print(task_id)
+print(host)
 res = requests.get(f'{host}/api/gh/task/{task_id}')
 data = res.json()
 print(res)
